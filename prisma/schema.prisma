@@ -43,7 +43,16 @@ model User {
 model Course {
   id          String       @id @default(uuid())
   title       String
+  subtitle    String
+  price       Float
+  courseType  CourseType
+  level        SkillLevel  
+  duration    Int
+  language    String
+  classes     String
   description String
+  demoVideo   String
+  thumnail    String
   status      CourseStatus @default(ONGOING)
   modules     Module[]
   resources   Resource[]
@@ -51,6 +60,15 @@ model Course {
   reviews     Review[]
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
+}
+enum SkillLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+enum CourseType {
+  PAID
+  FREE
 }
 
 enum CourseStatus {
@@ -61,7 +79,7 @@ enum CourseStatus {
 model Module {
   id        String   @id @default(uuid())
   title     String
-  order     Int
+  order     Int      
   courseId  String
   course    Course   @relation(fields: [courseId], references: [id])
   videos    Video[]
@@ -112,4 +130,14 @@ model Review {
   user      User     @relation(fields: [userId], references: [id])
   course    Course   @relation(fields: [courseId], references: [id])
   createdAt DateTime @default(now())
+}
+
+model Contact{
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  phone     String
+  address   String
+  city      String
+
 }
